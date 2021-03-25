@@ -133,19 +133,19 @@ describe('support template string formatter', () => {
     },
   });
   labels = pie.chart.geometries[0].labelsContainer.getChildren();
-  // todo 暂时没有提供精度配置，直接粗暴返回
-  expect((labels[0] as IGroup).getChildren()[0].attr('text')).toBe('item1: 1(2...');
+  // 默认不内置 limit-in-plot 的布局
+  expect((labels[0] as IGroup).getChildren()[0].attr('text')).toBe('item1: 1(20.00%)');
 
-  // 移除 limit-in-plot ellipsis
+  // 添加 limit-in-plot ellipsis
   pie.update({
     ...pie.options,
     label: {
       content: '{name}: {value}({percentage})',
-      layout: [],
+      layout: [{ type: 'limit-in-plot', cfg: { action: 'ellipsis' } }],
     },
   });
   labels = pie.chart.geometries[0].labelsContainer.getChildren();
-  expect((labels[0] as IGroup).getChildren()[0].attr('text')).toBe('item1: 1(20.00%)');
+  expect((labels[0] as IGroup).getChildren()[0].attr('text')).toBe('item1: 1(2...');
 
   pie.destroy();
 });
