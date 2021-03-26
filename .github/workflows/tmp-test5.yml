@@ -1,0 +1,24 @@
+name: tmp-test
+
+on: [ push ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Run Build
+        run: npm run build
+
+      - name: Run Test By Xvfb
+        run: xvfb-run --auto-servernum npm run test
