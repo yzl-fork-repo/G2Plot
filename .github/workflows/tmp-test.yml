@@ -15,10 +15,10 @@ jobs:
         run: sudo apt-get install xvfb
 
       - name: Install Packages
-        run: sudo npm install
+        run: npm install
 
       - name: Run Build
-        run: sudo npm run build
+        run: npm run build
 
       - name: Run Test By Xvfb
-        run: sudo xvfb-run --auto-servernum npm run test
+        run: xvfb-run --auto-servernum npm run test
